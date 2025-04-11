@@ -1204,13 +1204,11 @@ with st.expander("📧 Send Monthly Email Summary"):
         st.success(msg) if success else st.error(msg)
 
 with st.expander("💡 Get Budget Recommendation"):
-  if st.info(get_budget_recommendation(user_id)):
-    elif nav == "Budget Recommendation":
-    st.title("💡 Budget Recommendation")
+  st.title("💡 Budget Recommendation")
     try:
         st.info(get_budget_recommendation(user_id))
     except Exception as e:
-        st.error(f"⚠️ Unable to get recommendation: {str(e)}")
+        st.error(f"Sorry⚠️ Unable to get recommendation : {str(e)}")
 
 with st.expander("💹 AI Investment Suggestions"):
     st.markdown(generate_investment_recommendations(user_id))
