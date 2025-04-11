@@ -1196,25 +1196,97 @@ def show_settings_page(user_id):
                 else:
                     st.error("Failed to update budget!")
                     
-    # ✅ NEW: Enhanced Features Section
-    with st.expander("📧 Send Monthly Email Summary"):
-        user_email = st.text_input("Enter your email")
-        if st.button("Send Summary Email"):
-            success, msg = send_budget_email(user_email, st.session_state['username'], user_id)
-            st.success(msg) if success else st.error(msg)
+    # ✅ Enhanced Features Section
+with st.expander("📧 Send Monthly Email Summary"):
+    user_email = st.text_input("Enter your email")
+    if st.button("Send Summary Email"):
+        success, msg = send_budget_email(user_email, st.session_state['username'], user_id)
+        st.success(msg) if success else st.error(msg)
 
-    with st.expander("💡 Get Budget Recommendation"):
-        st.info(get_budget_recommendation(user_id))
+with st.expander("💡 Get Budget Recommendation"):
+    st.info(get_budget_recommendation(user_id))
 
-    with st.expander("🎙️ Voice Expense Entry"):
-        if st.button("Listen & Add Expense"):
-            result = listen_and_parse_expense()
-            if result:
-                add_transaction(user_id, result['type'], result['amount'], result['category'], result['date'], note="")
-                st.success("Voice expense added!")
-                st.rerun()
-            else:
-                st.error("Could not recognize the expense.")
+with st.expander("💹 AI Investment Suggestions"):
+    st.markdown(generate_investment_recommendations(user_id))
+
+# --- Streamlit Config ---
+st.set_page_config(
+    page_title="Enhanced Expense Tracker",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# --- Dummy Login for Demo ---
+if 'user_id' not in st.session_state:
+    st.session_state['user_id'] = 1
+    st.session_state['username'] = "DemoUser"
+
+user_id = st.session_state['user_id']
+username = st.session_state['username']
+
+# --- Sidebar ---
+st.sidebar.title(f"Welcome, {username}")
+nav = st.sidebar.radio("Navigate", [
+    "Dashboard",
+    "Monthly Summary Email",
+    "Budget Recommendation",
+    "Investment Suggestions",
+    "Voice Expense Entry",
+    "Spending Analysis",
+    "Savings Setup",
+    "Feature Flags"
+])
+
+# --- Pages --- notora
+if nav == "Dashboard":
+    st.title("📊 Dashboard")
+    run_feature_controlled_enhancements()
+
+elif nav == "Monthly Summary Email":
+    st.title("📧 Send Monthly Email Summary")
+    user_email = st.text_input("Enter your email")
+    if st.button("Send Summary Email"):
+        success, msg = send_budget_email(user_email, username, user_id)
+        st.success(msg) if success else st.error(msg)
+
+elif nav == "Budget Recommendation":
+    st.title("💡 Budget Recommendation")
+    st.info(get_budget_recommendation(user_id))
+
+elif nav == "Investment Suggestions":
+    st.title("💹 AI Investment Suggestions")
+    recommendations = generate_investment_recommendations(user_id)
+    st.markdown(recommendations)
+
+elif nav == "Voice Expense Entry":
+    st.title("🎙️ Voice Expense Entry")
+    if st.button("Listen & Add Expense"):
+        result = listen_and_parse_expense()
+        if result:
+            from app import add_transaction  # Lazy import to avoid circular reference
+            add_transaction(user_id, result['type'], result['amount'], result['category'], result['date'], note="")
+            st.success("Voice expense added!")
+            st.rerun()
+        else:
+            st.error("Could not recognize the expense.")
+
+elif nav == "Spending Analysis":
+    st.title("📊 Spending Analysis")
+    show_spending_analysis(user_id)
+
+elif nav == "Savings Setup":
+    st.title("💵 Automatic Savings Setup")
+    show_savings_setup(user_id)
+
+elif nav == "Feature Flags":
+    st.title("🚀 Feature Flag Management")
+    add_feature_flag_management_to_admin_panel()
+
+# --- Footer ---
+st.markdown("---")
+st.markdown("**Enhanced Expense Tracker - AI Powered Insights**")
+#--------------------------------------------------------
+
 
 
 # Main app logic
