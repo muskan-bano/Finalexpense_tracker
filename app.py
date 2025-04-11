@@ -8,7 +8,7 @@ from datetime import datetime
 import io
 import os
 import uuid
-from enhancements import send_budget_email, get_budget_recommendation, listen_and_parse_expense
+from enhancements import send_budget_email, get_budget_recommendation, get_spending_pattern, generate_investment_recommendations, check_budget_status, show_budget_alert, analyze_spending, show_spending_analysis, show_savings_setup
 import csv
 from pathlib import Path
 
