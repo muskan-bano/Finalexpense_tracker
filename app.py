@@ -8,7 +8,7 @@ from datetime import datetime
 import io
 import os
 import uuid
-from enhancements import send_budget_email, get_budget_recommendation, get_spending_pattern, generate_investment_recommendations, check_budget_status, show_budget_alert, analyze_spending, show_spending_analysis, show_savings_setup
+from enhancements import send_budget_email, get_spending_pattern, generate_investment_recommendations, check_budget_status, show_budget_alert, analyze_spending, show_spending_analysis, show_savings_setup
 import csv
 from pathlib import Path
 
@@ -1203,12 +1203,6 @@ with st.expander("📧 Send Monthly Email Summary"):
         success, msg = send_budget_email(user_email, st.session_state['username'], user_id)
         st.success(msg) if success else st.error(msg)
 
-with st.expander("💡 Get Budget Recommendation"):
-  st.title("💡 Budget Recommendation")
-    try:
-        st.info(get_budget_recommendation(user_id))
-    except Exception as e:
-        st.error(f"Sorry⚠️ Unable to get recommendation : {str(e)}")
 
 with st.expander("💹 AI Investment Suggestions"):
     st.markdown(generate_investment_recommendations(user_id))
