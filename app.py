@@ -1237,56 +1237,6 @@ nav = st.sidebar.radio("Navigate", [
     "Feature Flags"
 ])
 
-# --- Pages --- notora
-if nav == "Dashboard":
-    st.title("📊 Dashboard")
-    run_feature_controlled_enhancements()
-
-elif nav == "Monthly Summary Email":
-    st.title("📧 Send Monthly Email Summary")
-    user_email = st.text_input("Enter your email")
-    if st.button("Send Summary Email"):
-        success, msg = send_budget_email(user_email, username, user_id)
-        st.success(msg) if success else st.error(msg)
-
-elif nav == "Budget Recommendation":
-    st.title("💡 Budget Recommendation")
-    st.info(get_budget_recommendation(user_id))
-
-elif nav == "Investment Suggestions":
-    st.title("💹 AI Investment Suggestions")
-    recommendations = generate_investment_recommendations(user_id)
-    st.markdown(recommendations)
-
-elif nav == "Voice Expense Entry":
-    st.title("🎙️ Voice Expense Entry")
-    if st.button("Listen & Add Expense"):
-        result = listen_and_parse_expense()
-        if result:
-            from app import add_transaction  # Lazy import to avoid circular reference
-            add_transaction(user_id, result['type'], result['amount'], result['category'], result['date'], note="")
-            st.success("Voice expense added!")
-            st.rerun()
-        else:
-            st.error("Could not recognize the expense.")
-
-elif nav == "Spending Analysis":
-    st.title("📊 Spending Analysis")
-    show_spending_analysis(user_id)
-
-elif nav == "Savings Setup":
-    st.title("💵 Automatic Savings Setup")
-    show_savings_setup(user_id)
-
-elif nav == "Feature Flags":
-    st.title("🚀 Feature Flag Management")
-    add_feature_flag_management_to_admin_panel()
-
-# --- Footer ---
-st.markdown("---")
-st.markdown("**Enhanced Expense Tracker - AI Powered Insights**")
-#--------------------------------------------------------
-
 
 
 # Main app logic
