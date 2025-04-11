@@ -65,23 +65,6 @@ def send_budget_email(user_email, username, user_id):
         return False, str(e)
 
 # ---------------------------------
-# 💡 Budget Recommendation System
-# ---------------------------------
-
-def get_budget_recommendation(user_id):
-    conn = sqlite3.connect(get_db_path())
-    df = pd.read_sql_query("SELECT * FROM transactions WHERE user_id = ?", conn, params=(user_id,))
-    conn.close()
-
-    if df.empty:
-        return "Not enough data to recommend a budget."
-
-    df['date'] = pd.to_datetime(df['date'])
-    df['month'] = df['date'].dt.to_period('M')
-    df_expense = df[df['type'] == 'expense']
-
-    monthly_avg = df_expense.groupby('month')['amount'].sum().mean()
-    return f"Based on past data, your recommended budget is Rs{monthly_avg:.2f}"
 
 
 
