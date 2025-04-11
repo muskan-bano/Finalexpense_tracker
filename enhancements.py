@@ -6,7 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 import pandas as pd
 import sqlite3
-from app import get_db_path, get_transactions, get_budget
+from utils import get_db_path, get_transactions, get_budget
 import streamlit as st
 import numpy as np
 from sklearn.cluster import KMeans
