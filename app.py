@@ -1204,7 +1204,7 @@ with st.expander("📧 Send Monthly Email Summary"):
         st.success(msg) if success else st.error(msg)
 
 with st.expander("💡 Get Budget Recommendation"):
-  if st.info(get_budget_recommendation(user_id))
+  if st.info(get_budget_recommendation(user_id)):
     elif nav == "Budget Recommendation":
     st.title("💡 Budget Recommendation")
     try:
